@@ -1,0 +1,81 @@
+@startuml
+
+class Casino
+class Game
+class Roulette
+class BlackJack
+class SlotMachine
+class Dealer
+class GameRequireDealer
+enum ExperienceType
+enum CurrencyType
+enum GameDailyRevenue
+
+Casino *-- Game
+Game <|-- GameRequireDealer
+GameRequireDealer <|-- Roulette
+GameRequireDealer <|-- BlackJack
+GameRequireDealer -- Dealer
+Game <|-- SlotMachine
+Game - GameDailyRevenue
+ExperienceType -- CurrencyType
+ExperienceType - Dealer
+
+enum GameDailyRevenue {
+BLACK_JACK(1000000)
+ROULETTE(2000000)
+SLOT_MACHINE(500000)
+-currencyType : currencyType
+}
+
+enum ExperienceType {
+NEWBIE(50000)
+MID_LEVEL(80000)
+PRO(120000)
+-currency : CurrencyType
+}
+
+enum CurrencyType {
+HUF
+USD
+EUR
+}
+
+class Casino {
+-currentAmountOfMoney : BigDecimal
+-gameList : List<Game>
++calculateDailyRevenue() : BigDecimal
++calculateTotalBalance() : BigDecimal
+}
+
+abstract class GameRequireDealer {
+#dealer : Dealer
+}
+
+abstract class Game {
+#gameBank : BigDecimal
+#id : UUID
+#amountOfMaxPlayers : int
+#amountOfPlayers : int
+-gameDailyRevenue : GameDailyRevenue
++addPlayer() : void
++isTooMuchPlayer() : boolean
+}
+
+class Dealer {
+-name : String
+-experienceType : ExperienceType
+}
+
+class SlotMachine {
+-numOfRollsAfterWin : int
++play() : void
+-isWin() : boolean
+}
+
+class Roulette {
++isDealerAllowed() : boolean
++play() : String
+}
+
+@enduml
