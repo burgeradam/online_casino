@@ -19,6 +19,7 @@ GameRequireDealer -- Dealer
 Game <|-- SlotMachine
 Game - GameDailyRevenue
 ExperienceType -- CurrencyType
+GameDailyRevenue -- CurrencyType
 ExperienceType - Dealer
 
 enum GameDailyRevenue {
